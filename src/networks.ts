@@ -566,6 +566,19 @@ const networksRaw = /* #__PURE__ */ [
     currency_symbol: 'DOGE',
     currency_decimals: 8,
     is_testnet: false
+  },
+  // Thorchain
+  {
+    chain_id: NETWORK_IDS.THOR,
+    name: 'Thorchain',
+    short_name: 'THOR',
+    logo_url: 'https://api.rango.exchange/blockchains/thorchain.svg',
+    explorer_url: 'https://www.viewblock.io/thorchain/',
+    rpc_url: '',
+    currency_name: 'RUNE',
+    currency_symbol: 'RUNE',
+    currency_decimals: 8,
+    is_testnet: false
   }
 ]
 
