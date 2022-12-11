@@ -58,7 +58,8 @@ export const NETWORK_IDS = /* #__PURE__ */ {
   BTC: -200,
   Litecoin: -201,
   BCH: -202,
-  Tron: -10
+  Tron: -10,
+  DOGE: -203
 } as const
 
 export const EVM_BASE_TOKEN_ADDRESS = '0x0000000000000000000000000000000000000000'
@@ -80,7 +81,7 @@ export const EVM_WALLETS_CONFIG = [
 export const SOL_WALLETS_CONFIG = [WALLET_NAMES.Phantom]
 export const COSMOS_WALLETS_CONFIG = [WALLET_NAMES.Keplr]
 
-export const BTC_CHAINS = [NETWORK_IDS.BTC, NETWORK_IDS.Litecoin, NETWORK_IDS.BCH]
+export const BTC_CHAINS = [NETWORK_IDS.BTC, NETWORK_IDS.Litecoin, NETWORK_IDS.BCH, NETWORK_IDS.DOGE]
 export const EVM_CHAINS = /* #__PURE__ */ Object.keys(NETWORK_IDS).filter(chainName => NETWORK_IDS[chainName as keyof typeof NETWORK_IDS] > 0).map(chainName => NETWORK_IDS[chainName as keyof typeof NETWORK_IDS])
 export const SOL_CHAINS = [NETWORK_IDS.Solana, NETWORK_IDS.SolanaTestnet]
 export const COSMOS_CHAINS = [NETWORK_IDS.Cosmos, NETWORK_IDS.Osmosis] as const
@@ -90,14 +91,15 @@ export const isCosmosChain = (chainId: number) => COSMOS_CHAINS.includes(chainId
 export const isSolChain = (chainId: number) => SOL_CHAINS.includes(chainId as any)
 export const isBTClikeChain = (chainId: number) => BTC_CHAINS.includes(chainId as any)
 
-export const AVAILABLE_WALLETS_GROUPS_CONFIG = ['EVM', 'SOL', 'COSMOS', 'BTC', 'LTC', 'BCH'] as const
+export const AVAILABLE_WALLETS_GROUPS_CONFIG = ['EVM', 'SOL', 'COSMOS', 'BTC', 'LTC', 'BCH', 'DOGE'] as const
 
 export const chainWalletMap: TChainWallet[] = [
   { name: 'COSMOS', chainId: NETWORK_IDS.Cosmos, network: 'cosmoshub-4' },
   { name: 'OSMOSIS', chainId: NETWORK_IDS.Osmosis, network: 'osmosis-1' },
   { name: 'BTC', chainId: NETWORK_IDS.BTC, network: 'bitcoin' },
   { name: 'LTC', chainId: NETWORK_IDS.Litecoin, network: 'litecoin' },
-  { name: 'BCH', chainId: NETWORK_IDS.BCH, network: 'bitcoincash' }
+  { name: 'BCH', chainId: NETWORK_IDS.BCH, network: 'bitcoincash' },
+  { name: 'DOGE', chainId: NETWORK_IDS.DOGE, network: 'dogecoin' }
 ]
 
 export const cosmosChainWalletMap = /* #__PURE__ */ chainWalletMap.filter(chainWallet => COSMOS_CHAINS.includes(chainWallet.chainId as any))

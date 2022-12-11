@@ -553,6 +553,19 @@ const networksRaw = /* #__PURE__ */ [
     currency_symbol: 'CUBE',
     currency_decimals: 18,
     is_testnet: false
+  },
+  // Dogecoin
+  {
+    chain_id: NETWORK_IDS.DOGE,
+    name: 'Dogecoin',
+    short_name: 'DOGE',
+    logo_url: 'https://api.rango.exchange/blockchains/doge.svg',
+    explorer_url: 'https://www.blockchain.com/doge/',
+    rpc_url: '',
+    currency_name: 'Dogecoin',
+    currency_symbol: 'DOGE',
+    currency_decimals: 8,
+    is_testnet: false
   }
 ]
 
