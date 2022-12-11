@@ -6,6 +6,7 @@ type TXDeFiWeb3Provider = {
   litecoin: any
   dogecoin: any
   terra: any
+  thorchain: any
 }
 
 type TErc20SendTokenOptions = {

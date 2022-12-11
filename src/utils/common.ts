@@ -25,7 +25,8 @@ const addressRegExpList = /* #__PURE__ */ {
   [NETWORK_IDS.Litecoin]: /^(L|M|3)[A-Za-z0-9]{33}$|^(ltc1)[0-9A-Za-z]{39}$/,
   [NETWORK_IDS.BCH]: /^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$|^[0-9A-Za-z]{42,42}$/,
   [NETWORK_IDS.Tron]: /^T[a-zA-Z0-9]{33}$/,
-  [NETWORK_IDS.DOGE]: /^(D|A|9)[a-km-zA-HJ-NP-Z1-9]{33,34}$/
+  [NETWORK_IDS.DOGE]: /^(D|A|9)[a-km-zA-HJ-NP-Z1-9]{33,34}$/,
+  [NETWORK_IDS.THOR]: /^(thor1)[0-9a-z]{38}$/
 }
 
 export const isValidAddress = async (chainId: number, address: string) => {
@@ -70,6 +71,8 @@ export const isValidAddress = async (chainId: number, address: string) => {
     || chainId === NETWORK_IDS.BTC
     || chainId === NETWORK_IDS.BCH
     || chainId === NETWORK_IDS.Litecoin
+    || chainId === NETWORK_IDS.DOGE
+    || chainId === NETWORK_IDS.THOR
     || chainId === NETWORK_IDS.Tron) {
     return addressRegExpList[chainId].test(address)
   }

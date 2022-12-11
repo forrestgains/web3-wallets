@@ -130,7 +130,7 @@ type TWallet = {
 
 type TWalletValues = typeof WALLET_NAMES[keyof typeof WALLET_NAMES]
 
-type TAvailableNetworkNames = 'COSMOS' | 'OSMOSIS' | 'BTC' | 'LTC' | 'BCH' | 'DOGE'
+type TAvailableNetworkNames = 'COSMOS' | 'OSMOSIS' | 'BTC' | 'LTC' | 'BCH' | 'DOGE' | 'THOR'
 type TChainWallet = { name: TAvailableNetworkNames; chainId: typeof COSMOS_CHAINS[number] | typeof BTC_CHAINS[number] ; network: string }
 
 export type SignTypedDataArgs<TTypedData = unknown> = {
