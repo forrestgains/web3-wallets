@@ -10,7 +10,8 @@ class XDeFi {
       BTC: new XDeFiProvider(provider.bitcoin, [NETWORK_IDS.BTC]),
       ETH: new XDeFiProvider<Web3Provider>(provider.ethereum, EVM_CHAINS),
       BCH: new XDeFiProvider(provider.bitcoincash, [NETWORK_IDS.BCH]),
-      LTC: new XDeFiProvider(provider.litecoin, [NETWORK_IDS.Litecoin])
+      LTC: new XDeFiProvider(provider.litecoin, [NETWORK_IDS.Litecoin]),
+      DOGE: new XDeFiProvider(provider.dogecoin, [NETWORK_IDS.DOGE])
     }
   }
 
