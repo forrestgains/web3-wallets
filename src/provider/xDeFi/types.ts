@@ -1,6 +1,6 @@
 import type { XDeFiProvider } from './xDeFiProvider'
 
-const XDefiAvailableProviders = ['BTC', 'ETH', 'BCH', 'LTC', 'DOGE', 'THOR'] as const
+const XDefiAvailableProviders = ['BTC', 'ETH', 'BCH', 'LTC', 'DOGE', 'THOR', 'BNB'] as const
 
 type TXDeFiAvailableProviders = typeof XDefiAvailableProviders[number]
 

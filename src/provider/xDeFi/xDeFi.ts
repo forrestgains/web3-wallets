@@ -12,7 +12,8 @@ class XDeFi {
       BCH: new XDeFiProvider(provider.bitcoincash, [NETWORK_IDS.BCH]),
       LTC: new XDeFiProvider(provider.litecoin, [NETWORK_IDS.Litecoin]),
       DOGE: new XDeFiProvider(provider.dogecoin, [NETWORK_IDS.DOGE]),
-      THOR: new XDeFiProvider(provider.thorchain, [NETWORK_IDS.THOR])
+      THOR: new XDeFiProvider(provider.thorchain, [NETWORK_IDS.THOR]),
+      BNB: new XDeFiProvider(provider.binance, [NETWORK_IDS.BNB])
     }
   }
 
