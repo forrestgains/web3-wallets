@@ -60,7 +60,8 @@ export const NETWORK_IDS = /* #__PURE__ */ {
   BCH: -202,
   Tron: -10,
   DOGE: -203,
-  THOR: -204
+  THOR: -204,
+  BNB: -205
 } as const
 
 export const EVM_BASE_TOKEN_ADDRESS = '0x0000000000000000000000000000000000000000'
@@ -82,7 +83,7 @@ export const EVM_WALLETS_CONFIG = [
 export const SOL_WALLETS_CONFIG = [WALLET_NAMES.Phantom]
 export const COSMOS_WALLETS_CONFIG = [WALLET_NAMES.Keplr]
 
-export const BTC_CHAINS = [NETWORK_IDS.BTC, NETWORK_IDS.Litecoin, NETWORK_IDS.BCH, NETWORK_IDS.DOGE, NETWORK_IDS.THOR]
+export const BTC_CHAINS = [NETWORK_IDS.BTC, NETWORK_IDS.Litecoin, NETWORK_IDS.BCH, NETWORK_IDS.DOGE, NETWORK_IDS.THOR, NETWORK_IDS.BNB]
 export const EVM_CHAINS = /* #__PURE__ */ Object.keys(NETWORK_IDS).filter(chainName => NETWORK_IDS[chainName as keyof typeof NETWORK_IDS] > 0).map(chainName => NETWORK_IDS[chainName as keyof typeof NETWORK_IDS])
 export const SOL_CHAINS = [NETWORK_IDS.Solana, NETWORK_IDS.SolanaTestnet]
 export const COSMOS_CHAINS = [NETWORK_IDS.Cosmos, NETWORK_IDS.Osmosis] as const
@@ -92,7 +93,7 @@ export const isCosmosChain = (chainId: number) => COSMOS_CHAINS.includes(chainId
 export const isSolChain = (chainId: number) => SOL_CHAINS.includes(chainId as any)
 export const isBTClikeChain = (chainId: number) => BTC_CHAINS.includes(chainId as any)
 
-export const AVAILABLE_WALLETS_GROUPS_CONFIG = ['EVM', 'SOL', 'COSMOS', 'BTC', 'LTC', 'BCH', 'DOGE', 'THOR'] as const
+export const AVAILABLE_WALLETS_GROUPS_CONFIG = ['EVM', 'SOL', 'COSMOS', 'BTC', 'LTC', 'BCH', 'DOGE', 'THOR', 'BNB'] as const
 
 export const chainWalletMap: TChainWallet[] = [
   { name: 'COSMOS', chainId: NETWORK_IDS.Cosmos, network: 'cosmoshub-4' },
@@ -101,7 +102,8 @@ export const chainWalletMap: TChainWallet[] = [
   { name: 'LTC', chainId: NETWORK_IDS.Litecoin, network: 'litecoin' },
   { name: 'BCH', chainId: NETWORK_IDS.BCH, network: 'bitcoincash' },
   { name: 'DOGE', chainId: NETWORK_IDS.DOGE, network: 'dogecoin' },
-  { name: 'THOR', chainId: NETWORK_IDS.THOR, network: 'thorchain' }
+  { name: 'THOR', chainId: NETWORK_IDS.THOR, network: 'thorchain' },
+  { name: 'BNB', chainId: NETWORK_IDS.BNB, network: 'binance' }
 ]
 
 export const cosmosChainWalletMap = /* #__PURE__ */ chainWalletMap.filter(chainWallet => COSMOS_CHAINS.includes(chainWallet.chainId as any))

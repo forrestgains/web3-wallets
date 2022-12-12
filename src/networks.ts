@@ -579,6 +579,19 @@ const networksRaw = /* #__PURE__ */ [
     currency_symbol: 'RUNE',
     currency_decimals: 8,
     is_testnet: false
+  },
+  // BNB
+  {
+    chain_id: NETWORK_IDS.BNB,
+    name: 'Binance',
+    short_name: 'BNB',
+    logo_url: 'https://seeklogo.com/images/B/binance-coin-bnb-logo-CD94CC6D31-seeklogo.com.png',
+    explorer_url: 'https://binance.mintscan.io/',
+    rpc_url: '',
+    currency_name: 'BNB',
+    currency_symbol: 'BNB',
+    currency_decimals: 8,
+    is_testnet: false
   }
 ]
 
