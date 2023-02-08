@@ -1,50 +1,49 @@
 import type { Web3Provider } from '@ethersproject/providers'
-import utf8 from 'utf8'
-import { EIP712Domain, NAME_FN, NONCES_FN, SUPPORTED_TOKENS } from './constants'
+import type { AllowanceData } from '@uniswap/permit2-sdk'
+import { AllowanceProvider, PERMIT2_ADDRESS } from '@uniswap/permit2-sdk'
+import { BigNumber } from 'ethers/lib/ethers'
+import { hexZeroPad } from 'ethers/lib/utils'
+import { DaiPermitMessage, EIP712Permit2Domain, EIP712PermitDomains, NONCES_FN, PermitMessage, PermitSingleDetails, PermitSingleMessage, SUPPORTED_TOKENS } from './constants'
 import { call } from './rpc'
-import type { TDaiPermitMessage, TDomain, TERC2612PermitMessage, TPermitToken, TPermitTypes, TRSVResponse } from './types'
-
-const hexToUtf8 = (hex: string) => {
-  const str = hex.replace(/^0x/, '')
-  const bytes = []
-  for (let i = 0; i < str.length; i += 2) {
-    bytes.push(parseInt(str.substring(i, i + 2), 16))
-  }
-  return utf8.decode(String.fromCharCode(...bytes))
-}
-
-const splitSignatureToRSV = (signature: string): TRSVResponse => {
-  const r = `0x${signature.substring(2).substring(0, 64)}`
-  const s = `0x${signature.substring(2).substring(64, 128)}`
-  const v = parseInt(signature.substring(2).substring(128, 130), 16)
-  return { r, s, v }
-}
+import type { TDaiPermitMessage, TPermit2Domain, TPermitDomain, TPermitMessage, TPermitSingleMessage, TPermitToken, TPermitTypes } from './types'
+import { NETWORK_IDS } from '@/constants'
 
 const addZeros = (numZeros: number) => ''.padEnd(numZeros, '0')
 
-const getTokenName = async (provider: any, address: string) =>
-  hexToUtf8((await call(provider, address, NAME_FN)).substr(130))
+const getPermitDomain = async (permitToken: TPermitToken): Promise<TPermitDomain> => {
+  const { address, chainId, name, version } = permitToken
 
-const getDomain = async (provider: any, permitToken: TPermitToken): Promise<TDomain> => {
-  const { address, chainId } = permitToken
+  const domain: TPermitDomain = {
+    name,
+    version: version || '1',
+    verifyingContract: address
+  }
 
-  const name = await getTokenName(provider, address)
+  if (chainId === NETWORK_IDS.Ethereum) {
+    domain.chainId = chainId
+  } else {
+    domain.salt = hexZeroPad(BigNumber.from(chainId).toHexString(), 32)
+  }
 
-  const domain: TDomain = { name, version: '1', chainId, verifyingContract: address }
   return domain
 }
 
-const createTypedDaiData = (message: TDaiPermitMessage, domain: TDomain) => {
+const getPermit2Domain = async (permitToken: TPermitToken): Promise<TPermit2Domain> => {
+  const { address, chainId, name } = permitToken
+  const domain: TPermit2Domain = { name, chainId, verifyingContract: address }
+  return domain
+}
+
+const createTypedDaiData = (message: TDaiPermitMessage, domain: TPermitDomain, chainId: number) => {
+  if (!Object.keys(EIP712PermitDomains).includes(chainId.toString())) {
+    throw new Error('ChainId not supported')
+  }
+
   const typedData = {
     types: {
-      EIP712Domain,
-      Permit: [
-        { name: 'holder', type: 'address' },
-        { name: 'spender', type: 'address' },
-        { name: 'nonce', type: 'uint256' },
-        { name: 'expiry', type: 'uint256' },
-        { name: 'allowed', type: 'bool' }
-      ]
+      // @ts-expect-error – Check type above
+      EIP712Domain: EIP712PermitDomains[chainId]!,
+      Permit: DaiPermitMessage
     },
     primaryType: 'Permit',
     domain,
@@ -54,19 +53,33 @@ const createTypedDaiData = (message: TDaiPermitMessage, domain: TDomain) => {
   return typedData
 }
 
-const createTypedERC2612Data = (message: TERC2612PermitMessage, domain: TDomain) => {
+const createTypedPermitData = (message: TPermitMessage, domain: TPermitDomain, chainId: number) => {
+  if (!Object.keys(EIP712PermitDomains).includes(chainId.toString())) {
+    throw new Error('ChainId not supported')
+  }
+
   const typedData = {
     types: {
-      EIP712Domain,
-      Permit: [
-        { name: 'owner', type: 'address' },
-        { name: 'spender', type: 'address' },
-        { name: 'value', type: 'uint256' },
-        { name: 'nonce', type: 'uint256' },
-        { name: 'deadline', type: 'uint256' }
-      ]
+      // @ts-expect-error – Check type above
+      EIP712Domain: EIP712PermitDomains[chainId]!,
+      Permit: PermitMessage
     },
     primaryType: 'Permit',
+    domain,
+    message
+  }
+
+  return typedData
+}
+
+const createTypedPermitSingleData = (message: TPermitSingleMessage, domain: TPermit2Domain) => {
+  const typedData = {
+    types: {
+      EIP712Domain: EIP712Permit2Domain,
+      PermitSingle: PermitSingleMessage,
+      PermitDetails: PermitSingleDetails
+    },
+    primaryType: 'Permit2',
     domain,
     message
   }
@@ -79,10 +92,16 @@ const isTokenExists = (tokens: TPermitToken[], token: TPermitToken) => {
 }
 
 const getPermitNonce = async (provider: Web3Provider, token: TPermitToken): Promise<number> => {
-  const { address, noncesFn } = token
   const owner = await provider.getSigner().getAddress()
+  const { address, noncesFn = NONCES_FN } = token
 
-  return call(provider, address, `${noncesFn || NONCES_FN}${addZeros(24)}${owner.slice(2)}`)
+  return call(provider, address, `${noncesFn}${addZeros(24)}${owner.slice(2)}`)
+}
+
+const getPermit2Nonce = async (provider: Web3Provider, owner: string, token: string, spender: string): Promise<number> => {
+  const allowanceProvider = new AllowanceProvider(provider, PERMIT2_ADDRESS)
+  const allowance: AllowanceData = await allowanceProvider?.getAllowanceData(token, owner, spender)
+  return allowance?.nonce
 }
 
 const getTokenKey = (token: TPermitToken) => {
@@ -94,4 +113,4 @@ const getTokenKey = (token: TPermitToken) => {
   return entry[0] as TPermitTypes
 }
 
-export { addZeros, isTokenExists, splitSignatureToRSV, getTokenName, getDomain, createTypedDaiData, createTypedERC2612Data, getPermitNonce, getTokenKey }
+export { addZeros, getPermitDomain, getPermit2Domain, createTypedDaiData, createTypedPermitData, createTypedPermitSingleData, getPermit2Nonce, isTokenExists, getPermitNonce, getTokenKey }
