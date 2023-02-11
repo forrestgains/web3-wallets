@@ -467,19 +467,6 @@ const networksRaw = /* #__PURE__ */ [
     currency_decimals: 6,
     is_testnet: false
   },
-  // Sifchain
-  {
-    chain_id: -102,
-    name: 'Sifchain',
-    short_name: 'Sifchain',
-    logo_url: 'https://cdn.via.exchange/networks/Sifchain.svg',
-    explorer_url: 'https://atomscan.com/sifchain',
-    rpc_url: 'https://rpc.sifchain.finance/',
-    currency_name: 'urowan',
-    currency_symbol: 'ROWAN',
-    currency_decimals: 18,
-    is_testnet: false
-  },
   // Astar
   {
     chain_id: 592,
@@ -605,6 +592,32 @@ const networksRaw = /* #__PURE__ */ [
     currency_name: 'BNB',
     currency_symbol: 'BNB',
     currency_decimals: 8,
+    is_testnet: false
+  },
+  // JUNO
+  {
+    chain_id: -103,
+    name: 'Juno',
+    short_name: 'Juno',
+    logo_url: 'https://api.rango.exchange/blockchains/juno.svg',
+    explorer_url: 'https://www.mintscan.io/juno/',
+    rpc_url: 'https://rpc-juno.itastakers.com:443/',
+    currency_name: 'ujuno',
+    currency_symbol: 'JUNO',
+    currency_decimals: 6,
+    is_testnet: false
+  },
+  // AKASH
+  {
+    chain_id: -104,
+    name: 'Akash',
+    short_name: 'Akash',
+    logo_url: 'https://api.rango.exchange/blockchains/akash.svg',
+    explorer_url: 'https://www.mintscan.io/akash/',
+    rpc_url: 'https://rpc.cosmos.directory/akash',
+    currency_name: 'uakt',
+    currency_symbol: 'AKT',
+    currency_decimals: 6,
     is_testnet: false
   }
 ]
