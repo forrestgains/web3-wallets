@@ -54,6 +54,7 @@ export const NETWORK_IDS = /* #__PURE__ */ {
   TON: -3,
   Cosmos: -100,
   Osmosis: -101,
+  Kujira: -102,
   Juno: -103,
   Akash: -104,
   TONTestnet: -1003,
@@ -88,7 +89,7 @@ export const COSMOS_WALLETS_CONFIG = [WALLET_NAMES.Keplr]
 export const BTC_CHAINS = [NETWORK_IDS.BTC, NETWORK_IDS.Litecoin, NETWORK_IDS.BCH, NETWORK_IDS.DOGE, NETWORK_IDS.THOR, NETWORK_IDS.BNB]
 export const EVM_CHAINS = /* #__PURE__ */ Object.keys(NETWORK_IDS).filter(chainName => NETWORK_IDS[chainName as keyof typeof NETWORK_IDS] > 0).map(chainName => NETWORK_IDS[chainName as keyof typeof NETWORK_IDS])
 export const SOL_CHAINS = [NETWORK_IDS.Solana, NETWORK_IDS.SolanaTestnet]
-export const COSMOS_CHAINS = [NETWORK_IDS.Cosmos, NETWORK_IDS.Osmosis, NETWORK_IDS.Juno, NETWORK_IDS.Akash] as const
+export const COSMOS_CHAINS = [NETWORK_IDS.Cosmos, NETWORK_IDS.Osmosis, NETWORK_IDS.Juno, NETWORK_IDS.Akash, NETWORK_IDS.Kujira] as const
 
 export const isEvmChain = (chainId: number) => chainId > 0
 export const isCosmosChain = (chainId: number) => COSMOS_CHAINS.includes(chainId as any)
@@ -101,6 +102,7 @@ export const chainWalletMap: TChainWallet[] = [
   { name: 'COSMOS', chainId: NETWORK_IDS.Cosmos, network: 'cosmoshub-4' },
   { name: 'OSMOSIS', chainId: NETWORK_IDS.Osmosis, network: 'osmosis-1' },
   { name: 'JUNO', chainId: NETWORK_IDS.Juno, network: 'juno-1' },
+  { name: 'KUJIRA', chainId: NETWORK_IDS.Kujira, network: 'kaiyo-1' },
   { name: 'AKASH', chainId: NETWORK_IDS.Akash, network: 'akashnet-2' },
   { name: 'BTC', chainId: NETWORK_IDS.BTC, network: 'bitcoin' },
   { name: 'LTC', chainId: NETWORK_IDS.Litecoin, network: 'litecoin' },

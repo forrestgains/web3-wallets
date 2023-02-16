@@ -619,6 +619,19 @@ const networksRaw = /* #__PURE__ */ [
     currency_symbol: 'AKT',
     currency_decimals: 6,
     is_testnet: false
+  },
+  // KUJIRA
+  {
+    chain_id: -102,
+    name: 'Kujira',
+    short_name: 'Kujira',
+    logo_url: 'https://api.rango.exchange/blockchains/kuji.svg',
+    explorer_url: 'https://finder.kujira.app/kaiyo-1',
+    rpc_url: 'https://rpc.kaiyo.kujira.setten.io',
+    currency_name: 'ukuji',
+    currency_symbol: 'KUJI',
+    currency_decimals: 6,
+    is_testnet: false
   }
 ]
 
