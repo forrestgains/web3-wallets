@@ -1,6 +1,6 @@
 {
   "name": "@forrestg/web3-wallets",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "private": false,
   "description": "Universal interface for web3 wallets",
   "author": "Via Protocol (https://via.exchange)",
