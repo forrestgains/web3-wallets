@@ -12,8 +12,8 @@ import { Web3Provider } from '@ethersproject/providers/'
 
 import type { Window as KeplrWindow } from '@keplr-wallet/types'
 import type { TypedData } from 'abitype'
-import { EVM_CHAINS, LOCAL_STORAGE_WALLETS_KEY, NETWORK_IDS, SOL_CHAINS, WALLET_NAMES, WALLET_SUBNAME, chainWalletMap, cosmosChainWalletMap, isCosmosChain, isEvmChain, isSolChain } from '../constants'
-import type { SignTypedDataArgs, SignTypedDataResult, TAvailableWalletNames, TWalletLocalData, TWalletState, TWalletStore } from '../types'
+import { EVM_CHAINS, LOCAL_STORAGE_WALLETS_KEY, NETWORK_IDS, SOL_CHAINS, WALLET_NAMES, WALLET_SUBNAME, chainWalletMap, cosmosChainWalletMap, isCosmosChain, isEvmChain, isKujiraChain, isSolChain, kujiraChainWalletMap } from '../constants'
+import type { SignTypedDataArgs, SignTypedDataResult, TAvailableWalletNames, TChainWallet, TWalletLocalData, TWalletState, TWalletStore } from '../types'
 import { WALLET_STATUS } from '../types'
 import { getNetworkById, rpcMapping } from '../networks'
 import { getWalletInfoByChainId, useWalletAddressesHistory } from '../hooks'
@@ -391,21 +391,28 @@ const WalletProvider = function WalletProvider({ children }: { children: ReactNo
   }
 
   const connectKeplr = async (chainId: number) => {
-    if (!(isCosmosChain(chainId))) {
+    if (!isCosmosChain(chainId) && !isKujiraChain(chainId)) {
       throw new Error(`Keplr chainId ${chainId} is not supported`)
     }
 
     try {
       if (window.keplr) {
         updateWalletState('Keplr', { status: WALLET_STATUS.LOADING })
-
-        const chainList = cosmosChainWalletMap.map(chainWallet => chainWallet.network)
+        const mergedMap = [...cosmosChainWalletMap, ...kujiraChainWalletMap]
+        let chainList = mergedMap.map(chainWallet => chainWallet.network)
         const currentChain = chainWalletMap.find(chainWallet => chainWallet.chainId === chainId)
 
         if (!currentChain) {
           throw new Error(`Keplr chainId ${chainId} is not supported`)
         }
 
+        let mapArray: TChainWallet[] = []
+        if (currentChain.name === 'COSMOS') {
+          chainList = chainList.filter((chain: string) => chain !== 'kaiyo-1')
+          mapArray = [...cosmosChainWalletMap]
+        } else {
+          mapArray = [...cosmosChainWalletMap, ...kujiraChainWalletMap]
+        }
         const provider = window.keplr
 
         await provider.enable(chainList)
@@ -414,7 +421,7 @@ const WalletProvider = function WalletProvider({ children }: { children: ReactNo
         const addressesList = await offlineSigner.getAccounts()
         const { address } = addressesList[0]!
         const addressShort = shortenAddress(address)
-        const connectedWallets = await getCosmosConnectedWallets(provider)
+        const connectedWallets = await getCosmosConnectedWallets(provider, mapArray)
         const addresesInfo = getAddresesInfo(connectedWallets)
 
         addWalletAddress(addresesInfo)
