@@ -89,14 +89,16 @@ export const COSMOS_WALLETS_CONFIG = [WALLET_NAMES.Keplr]
 export const BTC_CHAINS = [NETWORK_IDS.BTC, NETWORK_IDS.Litecoin, NETWORK_IDS.BCH, NETWORK_IDS.DOGE, NETWORK_IDS.THOR, NETWORK_IDS.BNB]
 export const EVM_CHAINS = /* #__PURE__ */ Object.keys(NETWORK_IDS).filter(chainName => NETWORK_IDS[chainName as keyof typeof NETWORK_IDS] > 0).map(chainName => NETWORK_IDS[chainName as keyof typeof NETWORK_IDS])
 export const SOL_CHAINS = [NETWORK_IDS.Solana, NETWORK_IDS.SolanaTestnet]
-export const COSMOS_CHAINS = [NETWORK_IDS.Cosmos, NETWORK_IDS.Osmosis, NETWORK_IDS.Juno, NETWORK_IDS.Akash, NETWORK_IDS.Kujira] as const
+export const COSMOS_CHAINS = [NETWORK_IDS.Cosmos, NETWORK_IDS.Osmosis, NETWORK_IDS.Juno, NETWORK_IDS.Akash] as const
+export const KUJIRA_CHAINS = [NETWORK_IDS.Kujira] as const
 
 export const isEvmChain = (chainId: number) => chainId > 0
 export const isCosmosChain = (chainId: number) => COSMOS_CHAINS.includes(chainId as any)
 export const isSolChain = (chainId: number) => SOL_CHAINS.includes(chainId as any)
 export const isBTClikeChain = (chainId: number) => BTC_CHAINS.includes(chainId as any)
+export const isKujiraChain = (chainId: number) => KUJIRA_CHAINS.includes(chainId as any)
 
-export const AVAILABLE_WALLETS_GROUPS_CONFIG = ['EVM', 'SOL', 'COSMOS', 'BTC', 'LTC', 'BCH', 'DOGE', 'THOR', 'BNB'] as const
+export const AVAILABLE_WALLETS_GROUPS_CONFIG = ['EVM', 'SOL', 'COSMOS', 'BTC', 'LTC', 'BCH', 'DOGE', 'THOR', 'BNB', 'KUJIRA'] as const
 
 export const chainWalletMap: TChainWallet[] = [
   { name: 'COSMOS', chainId: NETWORK_IDS.Cosmos, network: 'cosmoshub-4' },
@@ -115,6 +117,8 @@ export const chainWalletMap: TChainWallet[] = [
 export const cosmosChainWalletMap = /* #__PURE__ */ chainWalletMap.filter(chainWallet => COSMOS_CHAINS.includes(chainWallet.chainId as any))
 
 export const btcChainWalletMap = /* #__PURE__ */ chainWalletMap.filter(chainWallet => BTC_CHAINS.includes(chainWallet.chainId as any))
+
+export const kujiraChainWalletMap = /* #__PURE__ */ chainWalletMap.filter(chainWallet => KUJIRA_CHAINS.includes(chainWallet.chainId as any))
 
 export const CHAINS_WITH_WALLET: TChainsWithWalletsLink[] = /* #__PURE__ */ [
   {
@@ -138,6 +142,12 @@ export const CHAINS_WITH_WALLET: TChainsWithWalletsLink[] = /* #__PURE__ */ [
   {
     key: 'COSMOS',
     chains: COSMOS_CHAINS,
+    wallets: COSMOS_WALLETS_CONFIG,
+    validate: isCosmosChain
+  },
+  {
+    key: 'KUJIRA',
+    chains: KUJIRA_CHAINS,
     wallets: COSMOS_WALLETS_CONFIG,
     validate: isCosmosChain
   }

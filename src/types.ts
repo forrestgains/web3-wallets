@@ -9,7 +9,7 @@ import type WalletConnectProvider from '@walletconnect/web3-provider'
 import type { Narrow, TypedData, TypedDataDomain, TypedDataToPrimitiveTypes } from 'abitype'
 import type { BigNumber, ethers } from 'ethers'
 import type { CosmosTransaction } from 'rango-sdk/lib'
-import type { AVAILABLE_WALLETS_GROUPS_CONFIG, BTC_CHAINS, BTC_WALLETS_CONFIG, COSMOS_CHAINS, COSMOS_WALLETS_CONFIG, EVM_WALLETS_CONFIG, SOL_WALLETS_CONFIG, WALLET_NAMES } from './constants'
+import type { AVAILABLE_WALLETS_GROUPS_CONFIG, BTC_CHAINS, BTC_WALLETS_CONFIG, COSMOS_CHAINS, COSMOS_WALLETS_CONFIG, EVM_WALLETS_CONFIG, KUJIRA_CHAINS, SOL_WALLETS_CONFIG, WALLET_NAMES } from './constants'
 import type { TErc20SendTokenOptions } from './context'
 import type { XDeFi } from './provider'
 import type { BTClikeTransaction } from './provider/xDeFi/types'
@@ -131,7 +131,7 @@ type TWallet = {
 type TWalletValues = typeof WALLET_NAMES[keyof typeof WALLET_NAMES]
 
 type TAvailableNetworkNames = 'COSMOS' | 'OSMOSIS' | 'BTC' | 'LTC' | 'BCH' | 'DOGE' | 'THOR' | 'BNB' | 'JUNO' | 'AKASH' | 'KUJIRA'
-type TChainWallet = { name: TAvailableNetworkNames; chainId: typeof COSMOS_CHAINS[number] | typeof BTC_CHAINS[number] ; network: string }
+type TChainWallet = { name: TAvailableNetworkNames; chainId: typeof COSMOS_CHAINS[number] | typeof BTC_CHAINS[number] | typeof KUJIRA_CHAINS[number] ; network: string }
 
 export type SignTypedDataArgs<TTypedData = unknown> = {
   /** Domain or domain signature for origin or contract */

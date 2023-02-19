@@ -5,7 +5,6 @@ import { cosmos } from '@keplr-wallet/cosmos'
 import { SigningStargateClient } from '@cosmjs/stargate'
 import Long from 'long'
 import type { TChainWallet } from '../types'
-import { cosmosChainWalletMap } from '../constants'
 import { getConnectedWallets } from './common'
 
 const uint8ArrayToHex = (buffer: Uint8Array): string => {
@@ -37,8 +36,8 @@ const getCosmosAccounts = async (provider: Keplr, chainId: string) => {
   })
 }
 
-const getCosmosConnectedWallets = async (provider: Keplr) => {
-  return await getConnectedWallets(cosmosChainWalletMap, (walletData: TChainWallet) => getCosmosAccounts(provider, walletData.network))
+const getCosmosConnectedWallets = async (provider: Keplr, mapArray: TChainWallet[]) => {
+  return await getConnectedWallets(mapArray, (walletData: TChainWallet) => getCosmosAccounts(provider, walletData.network))
 }
 
 const executeCosmosTransaction = async (cosmosTx: CosmosTransaction, provider: Keplr) => {

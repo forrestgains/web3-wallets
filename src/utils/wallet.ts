@@ -1,4 +1,4 @@
-import { BTC_WALLETS_CONFIG, COSMOS_WALLETS_CONFIG, EVM_WALLETS_CONFIG, SOL_WALLETS_CONFIG, isBTClikeChain, isCosmosChain, isEvmChain, isSolChain } from '../constants'
+import { BTC_WALLETS_CONFIG, COSMOS_WALLETS_CONFIG, EVM_WALLETS_CONFIG, SOL_WALLETS_CONFIG, isBTClikeChain, isCosmosChain, isEvmChain, isKujiraChain, isSolChain } from '../constants'
 import type { TBTCWalletStore, TCosmosWalletStore, TEvmWalletStore, TSolWalletStore, TWalletStore } from '@/types'
 
 const isEvmWallet = (walletData: TWalletStore, fromChainId?: number | null): walletData is TEvmWalletStore => {
@@ -10,7 +10,7 @@ const isSolWallet = (walletData: TWalletStore, fromChainId?: number | null): wal
 }
 
 const isCosmosWallet = (walletData: TWalletStore, fromChainId?: number | null): walletData is TCosmosWalletStore => {
-  return COSMOS_WALLETS_CONFIG.includes(walletData.name as any) && (!fromChainId || isCosmosChain(fromChainId))
+  return COSMOS_WALLETS_CONFIG.includes(walletData.name as any) && (!fromChainId || isCosmosChain(fromChainId) || isKujiraChain(fromChainId))
 }
 
 const isBTClikeWallet = (walletData: TWalletStore, fromChainId?: number | null): walletData is TBTCWalletStore => {
