@@ -31,19 +31,21 @@ function useCosmosBalance(options: TCosmosWalletStore & Pick<TUseBalanceOptions,
     }
   )
 
-  const balance = data?.amount ?? null
+  const balance = null
 
-  const setClientInstance = useCallback(async (rpcAddress: string) => {
-    const newClient = await StargateClient.connect(rpcAddress)
+  if (data?.amount) {
+    const setClientInstance = useCallback(async (rpcAddress: string) => {
+      const newClient = await StargateClient.connect(rpcAddress)
 
-    setClient(newClient)
-  }, [setClient])
+      setClient(newClient)
+    }, [setClient])
 
-  useEffect(() => {
-    if (chainId) {
-      setClientInstance(rpcMapping[chainId]!)
-    }
-  }, [chainId, setClientInstance])
+    useEffect(() => {
+      if (chainId) {
+        setClientInstance(rpcMapping[chainId]!)
+      }
+    }, [chainId, setClientInstance])
+  }
 
   return balance
 }
