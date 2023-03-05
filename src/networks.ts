@@ -632,6 +632,45 @@ const networksRaw = /* #__PURE__ */ [
     currency_symbol: 'KUJI',
     currency_decimals: 6,
     is_testnet: false
+  },
+  // STARGAZE
+  {
+    chain_id: -105,
+    name: 'Stargaze',
+    short_name: 'Stargaze',
+    logo_url: 'https://api.rango.exchange/blockchains/stargaze.png',
+    explorer_url: 'https://www.mintscan.io/stargaze/',
+    rpc_url: 'https://rpc.stargaze-apis.com',
+    currency_name: 'ustars',
+    currency_symbol: 'STARS',
+    currency_decimals: 6,
+    is_testnet: false
+  },
+  // MARS
+  {
+    chain_id: -106,
+    name: 'Mars',
+    short_name: 'Mars',
+    logo_url: 'https://api.rango.exchange/blockchains/mars.svg',
+    explorer_url: 'https://www.mintscan.io/mars-protocol',
+    rpc_url: 'https://rpc-mars.keplr.app',
+    currency_name: 'umars',
+    currency_symbol: 'MARS',
+    currency_decimals: 6,
+    is_testnet: false
+  },
+  // PERSISTENCE
+  {
+    chain_id: -107,
+    name: 'Persistence',
+    short_name: 'Persistence',
+    logo_url: 'https://api.rango.exchange/blockchains/persistence.png',
+    explorer_url: 'https://www.mintscan.io/persistence/',
+    rpc_url: 'https://rpc.cosmos.directory/persistence',
+    currency_name: 'uxprt',
+    currency_symbol: 'XPRT',
+    currency_decimals: 6,
+    is_testnet: false
   }
 ]
 

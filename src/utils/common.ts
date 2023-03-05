@@ -30,7 +30,10 @@ const addressRegExpList = /* #__PURE__ */ {
   [NETWORK_IDS.BNB]: /^(bnb1)[0-9a-z]{38}$/,
   [NETWORK_IDS.Juno]: /^(kujira1)[0-9a-z]{38}$/,
   [NETWORK_IDS.Akash]: /^(akash1)[0-9a-z]{38}$/,
-  [NETWORK_IDS.Kujira]: /^(akash1)[0-9a-z]{38}$/
+  [NETWORK_IDS.Kujira]: /^(akash1)[0-9a-z]{38}$/,
+  [NETWORK_IDS.Stargaze]: /^(stars1)[0-9a-z]{38}/,
+  [NETWORK_IDS.Persistence]: /^(persistence1)[0-9a-z]{38}/,
+  [NETWORK_IDS.Mars]: /^(mars1)[0-9a-z]{38}/
 }
 
 export const isValidAddress = async (chainId: number, address: string) => {
@@ -81,7 +84,10 @@ export const isValidAddress = async (chainId: number, address: string) => {
     || chainId === NETWORK_IDS.Tron
     || chainId === NETWORK_IDS.Juno
     || chainId === NETWORK_IDS.Akash
-    || chainId === NETWORK_IDS.Kujira) {
+    || chainId === NETWORK_IDS.Kujira
+    || chainId === NETWORK_IDS.Stargaze
+    || chainId === NETWORK_IDS.Persistence
+    || chainId === NETWORK_IDS.Mars) {
     return addressRegExpList[chainId].test(address)
   }
 
